@@ -1,13 +1,18 @@
 "use client";
 
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
-import { Star, ArrowDown, Phone, MapPin, Sparkles } from "lucide-react";
+import { motion, useMotionValue, useTransform, animate, AnimatePresence } from "framer-motion";
+import { Star, ArrowDown, Phone, MapPin, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 import { businessData, aiContent, siteConfig } from "@/data/site-data";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
+import { getReliableStockImages } from "@/lib/stock-images";
 
 export function HeroSection() {
   const heroVariant = (siteConfig as any).heroVariant || "minimal-centered";
   const layout = siteConfig.layout;
+  const hasImages = businessData.images && businessData.images.length > 0;
+
+  // If business has images, always use carousel hero (priority)
+  if (hasImages) return <HeroCarousel />;
 
   if (heroVariant === "split-screen" || heroVariant === "left-aligned-content" || heroVariant === "floating-cards") return <HeroSplit />;
   if (heroVariant === "large-typography-only" || heroVariant === "centered-typography") return <HeroTypography />;
@@ -21,7 +26,197 @@ export function HeroSection() {
   if (["brutalist", "high-contrast", "retro"].includes(layout)) return <HeroBold />;
   if (["dark-premium", "futuristic", "glassmorphism"].includes(layout)) return <HeroCinematic />;
 
-  return <HeroDefault />;
+  // No images: use stock images carousel
+  return <HeroCarousel />;
+}
+
+// ─── Layout: Image Carousel (default when images available) ───
+function HeroCarousel() {
+  const businessImages = businessData.images || [];
+  const hasOwnImages = businessImages.length > 0;
+  const images = hasOwnImages ? businessImages.slice(0, 5) : getReliableStockImages(businessData.category, 5);
+
+  const [current, setCurrent] = useState(0);
+  const [direction, setDirection] = useState(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const startAutoplay = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setDirection(1);
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 4000);
+  }, [images.length]);
+
+  useEffect(() => {
+    startAutoplay();
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+  }, [startAutoplay]);
+
+  const goTo = (idx: number) => {
+    setDirection(idx > current ? 1 : -1);
+    setCurrent(idx);
+    startAutoplay();
+  };
+
+  const goNext = () => { setDirection(1); setCurrent((prev) => (prev + 1) % images.length); startAutoplay(); };
+  const goPrev = () => { setDirection(-1); setCurrent((prev) => (prev - 1 + images.length) % images.length); startAutoplay(); };
+
+  const slideVariants = {
+    enter: (dir: number) => ({ x: dir > 0 ? "100%" : "-100%", opacity: 0 }),
+    center: { x: 0, opacity: 1 },
+    exit: (dir: number) => ({ x: dir > 0 ? "-100%" : "100%", opacity: 0 }),
+  };
+
+  return (
+    <section className="relative min-h-[85vh] md:min-h-screen flex items-center overflow-hidden bg-background">
+      {/* Background carousel */}
+      <div className="absolute inset-0">
+        <AnimatePresence initial={false} custom={direction} mode="popLayout">
+          <motion.img
+            key={current}
+            src={images[current]}
+            alt={`${businessData.name} ${current + 1}`}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </AnimatePresence>
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent" />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 w-full px-4 md:px-8 pt-20 pb-10">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-2xl"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, type: "spring" }}
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-4 md:mb-6"
+            >
+              <Sparkles size={12} className="text-white" />
+              <span className="text-xs font-medium text-white/90 uppercase tracking-wider">{businessData.category}</span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.7 }}
+              className="text-3xl md:text-5xl lg:text-6xl font-heading font-bold text-white leading-tight mb-4 md:mb-6"
+            >
+              {aiContent.tagline}
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              className="text-sm md:text-lg text-white/75 max-w-lg mb-6 md:mb-8 leading-relaxed"
+            >
+              {aiContent.heroDescription}
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+              className="flex flex-wrap gap-3"
+            >
+              <motion.a
+                href="#contact"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
+                className="px-6 py-3 md:px-8 md:py-4 bg-primary text-white rounded-full font-semibold text-sm md:text-base shadow-lg shadow-primary/30 hover:shadow-xl transition-all"
+              >
+                {aiContent.ctaButtonText || "Get Started"}
+              </motion.a>
+              {businessData.phone && (
+                <motion.a
+                  href={`tel:${businessData.phone.replace(/[^+\d]/g, "")}`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="px-6 py-3 md:px-8 md:py-4 rounded-full border border-white/30 text-white font-semibold text-sm md:text-base backdrop-blur-sm hover:bg-white/10 transition-all flex items-center gap-2"
+                >
+                  <Phone size={16} />
+                  Call Now
+                </motion.a>
+              )}
+            </motion.div>
+
+            {/* Rating */}
+            {businessData.rating && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1 }}
+                className="mt-6 md:mt-8 inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/15"
+              >
+                <div className="flex gap-0.5">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={13} className={i < Math.round(parseFloat(businessData.rating)) ? "text-yellow-400 fill-yellow-400" : "text-white/30"} />
+                  ))}
+                </div>
+                <span className="font-bold text-sm text-white">{businessData.rating}</span>
+                {businessData.reviewsCount && <span className="text-white/60 text-xs">({businessData.reviewsCount} reviews)</span>}
+              </motion.div>
+            )}
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Carousel controls */}
+      <div className="absolute bottom-6 right-4 md:bottom-10 md:right-10 z-10 flex items-center gap-3">
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={goPrev}
+          className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all"
+        >
+          <ChevronLeft size={18} />
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={goNext}
+          className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all"
+        >
+          <ChevronRight size={18} />
+        </motion.button>
+      </div>
+
+      {/* Dots */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:bottom-10 md:right-32 z-10 flex gap-2">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? "w-6 bg-white" : "w-1.5 bg-white/40 hover:bg-white/60"}`}
+          />
+        ))}
+      </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        className="absolute bottom-6 left-4 md:bottom-10 md:left-10 z-10"
+        animate={{ y: [0, 6, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+      >
+        <ArrowDown size={18} className="text-white/50" />
+      </motion.div>
+    </section>
+  );
 }
 
 // ─── Animated counter hook ───
