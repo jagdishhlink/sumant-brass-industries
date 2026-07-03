@@ -106,7 +106,7 @@ export function GallerySection() {
           variants={staggerContainer}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="hidden md:columns-2 lg:columns-3 md:gap-4 md:space-y-4"
+          className="hidden md:block md:columns-2 lg:columns-3 gap-4 space-y-4"
         >
           {displayImages.map((img: string, i: number) => (
             <motion.div
