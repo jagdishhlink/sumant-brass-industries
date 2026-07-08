@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import "../src/styles/globals.css";
 import { businessData, aiContent } from "@/data/site-data";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { SmoothScroll } from "@/components/layout/SmoothScroll";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-body" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-heading" });
@@ -20,7 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${playfair.variable} font-body antialiased bg-background text-foreground`}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <SmoothScroll>{children}</SmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   );

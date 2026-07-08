@@ -45,7 +45,7 @@ function HeroCarousel() {
     intervalRef.current = setInterval(() => {
       setDirection(1);
       setCurrent((prev) => (prev + 1) % images.length);
-    }, 4000);
+    }, 5000);
   }, [images.length]);
 
   useEffect(() => {
@@ -63,157 +63,316 @@ function HeroCarousel() {
   const goPrev = () => { setDirection(-1); setCurrent((prev) => (prev - 1 + images.length) % images.length); startAutoplay(); };
 
   const slideVariants = {
-    enter: (dir: number) => ({ x: dir > 0 ? "100%" : "-100%", opacity: 0 }),
-    center: { x: 0, opacity: 1 },
-    exit: (dir: number) => ({ x: dir > 0 ? "-100%" : "100%", opacity: 0 }),
+    enter: (dir: number) => ({ x: dir > 0 ? "100%" : "-100%", opacity: 0, scale: 1.1 }),
+    center: { x: 0, opacity: 1, scale: 1 },
+    exit: (dir: number) => ({ x: dir > 0 ? "-100%" : "100%", opacity: 0, scale: 0.95 }),
   };
 
   return (
-    <section className="relative min-h-[85vh] md:min-h-screen flex items-center overflow-hidden bg-background">
-      {/* Background carousel */}
+    <section className="relative min-h-[100vh] flex items-center overflow-hidden bg-black">
+      {/* Background carousel with ken-burns zoom */}
       <div className="absolute inset-0">
         <AnimatePresence initial={false} custom={direction} mode="popLayout">
-          <motion.img
+          <motion.div
             key={current}
-            src={images[current]}
-            alt={`${businessData.name} ${current + 1}`}
             custom={direction}
             variants={slideVariants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+            transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="absolute inset-0"
+          >
+            <motion.img
+              src={images[current]}
+              alt={`${businessData.name} ${current + 1}`}
+              className="absolute inset-0 w-full h-full object-cover"
+              animate={{ scale: [1, 1.08] }}
+              transition={{ duration: 5, ease: "easeOut" }}
+            />
+          </motion.div>
         </AnimatePresence>
-        {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent" />
+
+        {/* Multi-layer overlays for depth */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-transparent" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 w-full px-4 md:px-8 pt-20 pb-10">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-2xl"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, type: "spring" }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-4 md:mb-6"
-            >
-              <Sparkles size={12} className="text-white" />
-              <span className="text-xs font-medium text-white/90 uppercase tracking-wider">{businessData.category}</span>
-            </motion.div>
+      {/* Subtle grid pattern overlay */}
+      <div
+        className="absolute inset-0 z-[1] opacity-[0.04] pointer-events-none"
+        style={{
+          backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+        }}
+      />
 
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.7 }}
-              className="text-3xl md:text-5xl lg:text-6xl font-heading font-bold text-white leading-tight mb-4 md:mb-6"
+      {/* Frosted glass navigation indicator on the side */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 1.2, duration: 0.6 }}
+        className="hidden lg:flex absolute left-6 top-1/2 -translate-y-1/2 z-20 flex-col items-center gap-3"
+      >
+        <div className="px-2.5 py-4 rounded-full bg-white/[0.08] backdrop-blur-xl border border-white/[0.12] flex flex-col items-center gap-3">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              className="relative flex items-center justify-center"
             >
-              {aiContent.tagline}
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
-              className="text-sm md:text-lg text-white/75 max-w-lg mb-6 md:mb-8 leading-relaxed"
-            >
-              {aiContent.heroDescription}
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className="flex flex-wrap gap-3"
-            >
-              <motion.a
-                href="#contact"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.97 }}
-                className="px-6 py-3 md:px-8 md:py-4 bg-primary text-white rounded-full font-semibold text-sm md:text-base shadow-lg shadow-primary/30 hover:shadow-xl transition-all"
-              >
-                {aiContent.ctaButtonText || "Get Started"}
-              </motion.a>
-              {businessData.phone && (
-                <motion.a
-                  href={`tel:${businessData.phone.replace(/[^+\d]/g, "")}`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="px-6 py-3 md:px-8 md:py-4 rounded-full border border-white/30 text-white font-semibold text-sm md:text-base backdrop-blur-sm hover:bg-white/10 transition-all flex items-center gap-2"
-                >
-                  <Phone size={16} />
-                  Call Now
-                </motion.a>
-              )}
-            </motion.div>
-
-            {/* Rating */}
-            {businessData.rating && (
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1 }}
-                className="mt-6 md:mt-8 inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/15"
-              >
-                <div className="flex gap-0.5">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={13} className={i < Math.round(parseFloat(businessData.rating)) ? "text-yellow-400 fill-yellow-400" : "text-white/30"} />
-                  ))}
-                </div>
-                <span className="font-bold text-sm text-white">{businessData.rating}</span>
-                {businessData.reviewsCount && <span className="text-white/60 text-xs">({businessData.reviewsCount} reviews)</span>}
-              </motion.div>
-            )}
-          </motion.div>
+                className={`rounded-full transition-all duration-500 ${i === current ? "w-2.5 h-2.5 bg-white" : "w-2 h-2 bg-white/30 hover:bg-white/50"}`}
+                layoutId={undefined}
+              />
+              {i === current && (
+                <motion.div
+                  layoutId="sideIndicator"
+                  className="absolute inset-[-3px] rounded-full border border-white/50"
+                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                />
+              )}
+            </button>
+          ))}
+        </div>
+        <motion.span
+          className="text-[10px] text-white/40 font-medium tracking-widest uppercase mt-1"
+          style={{ writingMode: "vertical-rl" }}
+        >
+          {String(current + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}
+        </motion.span>
+      </motion.div>
+
+      {/* Main content with glassmorphism card */}
+      <div className="relative z-10 w-full px-4 md:px-8 lg:px-16 pt-24 pb-16">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-12 gap-6 lg:gap-10 items-center">
+            {/* Left: Glassmorphism content card */}
+            <motion.div
+              initial={{ opacity: 0, y: 40, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="lg:col-span-7 xl:col-span-7"
+            >
+              <div className="relative p-6 md:p-10 lg:p-12 rounded-3xl bg-white/[0.06] backdrop-blur-2xl border border-white/[0.1] shadow-2xl shadow-black/20">
+                {/* Glow effect behind card */}
+                <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-primary/20 via-transparent to-accent/10 blur-xl opacity-50 -z-10" />
+
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.08] backdrop-blur-sm border border-white/[0.15] mb-5 md:mb-7"
+                >
+                  <Sparkles size={13} className="text-primary" />
+                  <span className="text-[11px] md:text-xs font-semibold text-white/90 uppercase tracking-[0.15em]">{businessData.category}</span>
+                </motion.div>
+
+                <motion.h1
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.8 }}
+                  className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-heading font-extrabold leading-[1.05] mb-4 md:mb-6"
+                >
+                  <span className="gradient-text">{aiContent.tagline}</span>
+                </motion.h1>
+
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6, duration: 0.6 }}
+                  className="text-sm md:text-base lg:text-lg text-white/60 max-w-xl mb-7 md:mb-9 leading-relaxed"
+                >
+                  {aiContent.heroDescription}
+                </motion.p>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 }}
+                  className="flex flex-wrap gap-3 md:gap-4"
+                >
+                  <motion.a
+                    href="#contact"
+                    whileHover={{ scale: 1.04, boxShadow: "0 20px 40px rgba(var(--color-primary-rgb, 99, 102, 241), 0.3)" }}
+                    whileTap={{ scale: 0.97 }}
+                    className="px-7 py-3.5 md:px-10 md:py-4.5 bg-primary text-white rounded-full font-bold text-sm md:text-base shadow-lg shadow-primary/25 hover:shadow-xl transition-all"
+                  >
+                    {aiContent.ctaButtonText || "Get Started"}
+                  </motion.a>
+                  {businessData.phone && (
+                    <motion.a
+                      href={`tel:${businessData.phone.replace(/[^+\d]/g, "")}`}
+                      whileHover={{ scale: 1.04, backgroundColor: "rgba(255,255,255,0.12)" }}
+                      whileTap={{ scale: 0.97 }}
+                      className="px-7 py-3.5 md:px-10 md:py-4.5 rounded-full border border-white/20 text-white font-bold text-sm md:text-base backdrop-blur-sm hover:border-white/40 transition-all flex items-center gap-2.5"
+                    >
+                      <Phone size={16} />
+                      Call Now
+                    </motion.a>
+                  )}
+                </motion.div>
+
+                {/* Location badge inside card */}
+                {businessData.address && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.1 }}
+                    className="mt-6 md:mt-8 flex items-center gap-2 text-white/40 text-xs md:text-sm"
+                  >
+                    <MapPin size={14} className="text-white/50" />
+                    <span>{businessData.address}</span>
+                  </motion.div>
+                )}
+              </div>
+            </motion.div>
+
+            {/* Right: Floating glass stat cards */}
+            <div className="lg:col-span-5 xl:col-span-5 hidden lg:flex flex-col gap-4 items-end">
+              {businessData.rating && (
+                <motion.div
+                  initial={{ opacity: 0, x: 60, rotateY: -10 }}
+                  animate={{ opacity: 1, x: 0, rotateY: 0 }}
+                  transition={{ delay: 0.7, duration: 0.7, ease: "easeOut" }}
+                  whileHover={{ scale: 1.03, x: -5 }}
+                  className="w-full max-w-[280px] p-5 rounded-2xl bg-white/[0.07] backdrop-blur-xl border border-white/[0.12] shadow-xl"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-xl bg-yellow-400/20 flex items-center justify-center">
+                      <Star size={18} className="text-yellow-400 fill-yellow-400" />
+                    </div>
+                    <div>
+                      <p className="text-white/50 text-[11px] uppercase tracking-wider font-medium">Rating</p>
+                      <p className="text-white text-xl font-bold">{businessData.rating}</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={14} className={i < Math.round(parseFloat(businessData.rating)) ? "text-yellow-400 fill-yellow-400" : "text-white/20"} />
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+
+              {businessData.reviewsCount && (
+                <motion.div
+                  initial={{ opacity: 0, x: 60, rotateY: -10 }}
+                  animate={{ opacity: 1, x: 0, rotateY: 0 }}
+                  transition={{ delay: 0.9, duration: 0.7, ease: "easeOut" }}
+                  whileHover={{ scale: 1.03, x: -5 }}
+                  className="w-full max-w-[280px] p-5 rounded-2xl bg-white/[0.07] backdrop-blur-xl border border-white/[0.12] shadow-xl"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
+                      <Sparkles size={18} className="text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-white/50 text-[11px] uppercase tracking-wider font-medium">Reviews</p>
+                      <p className="text-white text-xl font-bold">{businessData.reviewsCount}+</p>
+                    </div>
+                  </div>
+                  <div className="mt-3 h-1.5 rounded-full bg-white/10 overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: "92%" }}
+                      transition={{ delay: 1.4, duration: 1.2, ease: "easeOut" }}
+                      className="h-full rounded-full bg-gradient-to-r from-primary to-accent"
+                    />
+                  </div>
+                  <p className="text-white/40 text-[11px] mt-2">Satisfaction rate</p>
+                </motion.div>
+              )}
+
+              {businessData.phone && (
+                <motion.div
+                  initial={{ opacity: 0, x: 60, rotateY: -10 }}
+                  animate={{ opacity: 1, x: 0, rotateY: 0 }}
+                  transition={{ delay: 1.1, duration: 0.7, ease: "easeOut" }}
+                  whileHover={{ scale: 1.03, x: -5 }}
+                  className="w-full max-w-[280px] p-5 rounded-2xl bg-white/[0.07] backdrop-blur-xl border border-white/[0.12] shadow-xl"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-green-400/20 flex items-center justify-center">
+                      <Phone size={18} className="text-green-400" />
+                    </div>
+                    <div>
+                      <p className="text-white/50 text-[11px] uppercase tracking-wider font-medium">Available Now</p>
+                      <p className="text-white text-sm font-semibold">{businessData.phone}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Carousel controls */}
-      <div className="absolute bottom-6 right-4 md:bottom-10 md:right-10 z-10 flex items-center gap-3">
+      {/* Bottom carousel controls and premium dots */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-5">
         <motion.button
-          whileHover={{ scale: 1.1 }}
+          whileHover={{ scale: 1.15 }}
           whileTap={{ scale: 0.9 }}
           onClick={goPrev}
-          className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all"
+          className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] flex items-center justify-center text-white hover:bg-white/[0.15] transition-all"
         >
           <ChevronLeft size={18} />
         </motion.button>
+
+        {/* Premium pill-shaped dots */}
+        <div className="flex items-center gap-2">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              className="relative h-2.5 flex items-center"
+            >
+              <motion.div
+                animate={{
+                  width: i === current ? 32 : 10,
+                  backgroundColor: i === current ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.3)",
+                }}
+                transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                className="h-2.5 rounded-full hover:bg-white/50 transition-colors"
+              />
+              {i === current && (
+                <motion.div
+                  layoutId="dotGlow"
+                  className="absolute inset-0 rounded-full bg-white/20 blur-sm"
+                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                />
+              )}
+            </button>
+          ))}
+        </div>
+
         <motion.button
-          whileHover={{ scale: 1.1 }}
+          whileHover={{ scale: 1.15 }}
           whileTap={{ scale: 0.9 }}
           onClick={goNext}
-          className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all"
+          className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] flex items-center justify-center text-white hover:bg-white/[0.15] transition-all"
         >
           <ChevronRight size={18} />
         </motion.button>
       </div>
 
-      {/* Dots */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:bottom-10 md:right-32 z-10 flex gap-2">
-        {images.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => goTo(i)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? "w-6 bg-white" : "w-1.5 bg-white/40 hover:bg-white/60"}`}
-          />
-        ))}
-      </div>
-
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-6 left-4 md:bottom-10 md:left-10 z-10"
-        animate={{ y: [0, 6, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
+        className="absolute bottom-8 right-6 md:right-10 z-10 flex flex-col items-center gap-2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5 }}
       >
-        <ArrowDown size={18} className="text-white/50" />
+        <motion.span className="text-[10px] text-white/40 uppercase tracking-widest font-medium" style={{ writingMode: "vertical-rl" }}>
+          Scroll
+        </motion.span>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          <ArrowDown size={16} className="text-white/40" />
+        </motion.div>
       </motion.div>
     </section>
   );

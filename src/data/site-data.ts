@@ -6,50 +6,50 @@ export const businessData = {
   phone: "\n097376 54341",
   email: "",
   website: "http://www.sumantbrassindustries.com/",
-  mapUrl: "https://www.google.com/maps/place/Sumant+Brass+Industries/@22.4135728,70.0564298,3a,75y,159.53h,90t/data=!3m7!1e1!3m5!1sJ0Rlm68EpTEketLhtU4CVg!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D0%26panoid%3DJ0Rlm68EpTEketLhtU4CVg%26yaw%3D159.53156!7i16384!8i8192!4m6!3m5!1s0x39576b1d8b19d217:0x2f68582554703bcb!8m2!3d22.4134957!4d70.0564573!16s%2Fg%2F11sfb7xxqr?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",
+  mapUrl: "https://www.google.com/maps/place/Sumant+Brass+Industries/@22.4135728,70.0564298,56a,75y,159.53h,90t/data=!3m7!1e1!3m5!1sJ0Rlm68EpTEketLhtU4CVg!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D0%26panoid%3DJ0Rlm68EpTEketLhtU4CVg%26yaw%3D159.53156!7i16384!8i8192!4m6!3m5!1s0x39576b1d8b19d217:0x2f68582554703bcb!8m2!3d22.4134957!4d70.0564573!16s%2Fg%2F11sfb7xxqr?entry=ttu&g_ep=EgoyMDI2MDcwNS4wIKXMDSoASAFQAw%3D%3D",
   latitude: "22.4135728",
   longitude: "70.0564298",
   rating: "",
   reviewsCount: "3",
   openingHours: "Show open hours for the week",
   logo: "/images/logo.png",
-  images: ["/images/img_1783103994371_0.jpg", "/images/img_1783103995614_1.jpg", "/images/img_1783103995949_2.jpg", "/images/img_1783103996304_3.jpg", "/images/img_1783103996692_4.jpg", "/images/img_1783103997058_5.jpg", "/images/img_1783103997395_6.jpg", "/images/gmap_1783103998465_0.jpg", "/images/gmap_1783103998743_1.jpg", "/images/gmap_1783103998954_2.jpg", "/images/gmap_1783103999197_3.jpg", "/images/website_0.jpg", "/images/website_1.jpg", "/images/website_2.jpg", "/images/website_3.jpg", "/images/website_4.jpg", "/images/website_5.jpg", "/images/website_6.jpg", "http://www.sumantbrassindustries.com/images/1.jpg", "http://www.sumantbrassindustries.com/images/2.jpg", "http://www.sumantbrassindustries.com/images/3.jpg", "http://www.sumantbrassindustries.com/images/4.jpg", "http://www.sumantbrassindustries.com/images/5.jpg", "http://www.sumantbrassindustries.com/images/6.jpg", "http://www.sumantbrassindustries.com/images/7.jpg"],
+  images: ["/images/img_1783509968798_0.jpg", "/images/img_1783509970059_1.jpg", "/images/img_1783509970459_2.jpg", "/images/img_1783509970853_3.jpg", "/images/img_1783509971259_4.jpg", "/images/img_1783509971703_5.jpg", "/images/img_1783509972072_6.jpg", "/images/gmap_1783509973422_0.jpg", "/images/gmap_1783509974116_1.jpg", "/images/gmap_1783509974674_2.jpg", "/images/gmap_1783509975312_3.jpg", "/images/website_0.jpg", "/images/website_1.jpg", "/images/website_2.jpg", "/images/website_3.jpg", "/images/website_4.jpg", "/images/website_5.jpg", "/images/website_6.jpg", "http://www.sumantbrassindustries.com/images/1.jpg", "http://www.sumantbrassindustries.com/images/2.jpg", "http://www.sumantbrassindustries.com/images/3.jpg", "http://www.sumantbrassindustries.com/images/4.jpg", "http://www.sumantbrassindustries.com/images/5.jpg", "http://www.sumantbrassindustries.com/images/6.jpg", "http://www.sumantbrassindustries.com/images/7.jpg"],
   description: "",
   socials: {},
 };
 
 export const aiContent = {
-  tagline: "Gujarat's Brass Experts",
-  heroDescription: "Located in the heart of Jamnagar, Sumant Brass Industries is a leading manufacturer of high-quality brass products. With a strong focus on innovation and customer satisfaction, we have established ourselves as a trusted name in the industry. Our state-of-the-art facilities in GIDC Phase 2 enable us to deliver exceptional products and services to our clients.",
-  aboutTitle: "Our Story",
-  aboutText: "At Sumant Brass Industries, we take pride in our rich history and expertise in brass manufacturing. Founded with a vision to provide top-notch products, we have been operating from our facility at  Plot No.372/5, G.I.D.C. Phase 2, Dared, Jamnagar, Gujarat 361012. Our team of skilled professionals has years of experience in crafting high-quality brass products that meet the precise needs of our clients. With a strong commitment to quality and customer satisfaction, we have built a loyal client base across the region.",
+  tagline: "Jamnagar's Brass Experts",
+  heroDescription: "Welcome to Sumant Brass Industries, a leading manufacturer of high-quality brass products in Gujarat. Located in the heart of Jamnagar, our state-of-the-art facilities enable us to deliver exceptional products. With a strong commitment to quality and customer satisfaction, we have established ourselves as a trusted name in the industry.",
+  aboutTitle: "Our Story: Crafting Excellence",
+  aboutText: "Sumant Brass Industries is situated at Plot No.372/5, G.I.D.C. Phase 2, in the bustling industrial hub of Jamnagar. Our strategic location allows us to cater to a diverse range of clients across the region. With a strong focus on innovation and quality, we have been consistently delivering outstanding brass products that meet the highest standards of excellence. Our team of skilled professionals is dedicated to ensuring that every product that leaves our facility meets the highest standards of quality and craftsmanship.",
   services: [
-    { icon: "🔩", title: "Brass Component Manufacturing", description: "We offer custom brass component manufacturing services to cater to the diverse needs of our clients. Our team of experts works closely with clients to understand their requirements and deliver high-quality products." },
-    { icon: "💡", title: "Brass Fittings and Fixtures", description: "Our range of brass fittings and fixtures is designed to provide durability and reliability. We offer a wide range of products, including faucets, valves, and other plumbing fixtures." },
-    { icon: "📦", title: "Brass Hardware Manufacturing", description: "We specialize in manufacturing high-quality brass hardware products, including door handles, hinges, and other architectural hardware. Our products are known for their durability and elegant design." },
-    { icon: "🔧", title: "Brass CNC Machining", description: "Our state-of-the-art CNC machining facilities enable us to deliver high-precision brass products. We offer custom CNC machining services to cater to the specific needs of our clients." },
-    { icon: "🛠️", title: "Brass Fabrication Services", description: "We offer a range of brass fabrication services, including welding, cutting, and assembly. Our team of skilled professionals works closely with clients to deliver high-quality products that meet their precise needs." },
-    { icon: "🚚", title: "Brass Product Export", description: "We export our high-quality brass products to clients across the globe. Our team of experts ensures that all products are carefully packaged and shipped to meet the precise needs of our clients." }
+    { icon: "🏭", title: "Brass Component Manufacturing", description: "We specialize in manufacturing high-precision brass components for various industries, including automotive, aerospace, and more." },
+    { icon: "💡", title: "Custom Brass Product Development", description: "Our team of experts works closely with clients to design and develop custom brass products that meet their specific requirements." },
+    { icon: "🔩", title: "Brass Machining Services", description: "We offer precision machining services for brass products, including milling, turning, and grinding." },
+    { icon: "📦", title: "Brass Product Export", description: "We export our high-quality brass products to clients across the globe, ensuring timely delivery and exceptional customer service." },
+    { icon: "🔍", title: "Brass Quality Control", description: "Our rigorous quality control processes ensure that every brass product that leaves our facility meets the highest standards of quality and excellence." },
+    { icon: "📈", title: "Brass Product Research and Development", description: "Our team of experts continuously works on researching and developing new brass products and technologies to stay ahead of the curve." }
   ],
   whyChooseUs: [
-    { icon: "🏆", title: "Quality Assurance", description: "At Sumant Brass Industries, we are committed to delivering high-quality products that meet the precise needs of our clients. Our team of experts ensures that all products undergo rigorous quality checks before they are shipped." },
-    { icon: "📈", title: "Competitive Pricing", description: "We offer competitive pricing for all our products and services. Our team of experts works closely with clients to understand their budget and deliver high-quality products that meet their needs." },
-    { icon: "🕒", title: "Timely Delivery", description: "We understand the importance of timely delivery and ensure that all our products are shipped on time. Our team of experts works closely with clients to meet their deadlines and deliver high-quality products." },
-    { icon: "📢", title: "Customer Support", description: "At Sumant Brass Industries, we are committed to providing exceptional customer support. Our team of experts is available to answer all your questions and provide support whenever you need it." }
+    { icon: "🏆", title: "Quality Excellence", description: "At Sumant Brass Industries, we are committed to delivering exceptional quality products that meet the highest standards of excellence." },
+    { icon: "📊", title: "Competitive Pricing", description: "We offer competitive pricing for our brass products, ensuring that our clients receive the best value for their money." },
+    { icon: "🕒", title: "Timely Delivery", description: "We understand the importance of timely delivery and ensure that our products reach our clients on time, every time." },
+    { icon: "👥", title: "Experienced Team", description: "Our team of skilled professionals has years of experience in the brass manufacturing industry, ensuring that every product is crafted with precision and care." }
   ],
   testimonials: [
     { name: "Mahesh Chauhan", role: "Google Review", text: "This Place is currently right", rating: 5 }
   ],
-  faq: { items: [{ question: "What types of brass products do you manufacture?", answer: "At Sumant Brass Industries, we manufacture a wide range of brass products, including brass components, brass fittings and fixtures, brass hardware, and more. We also offer custom manufacturing services to cater to the specific needs of our clients." },
-    { question: "Do you export your brass products?", answer: "Yes, we export our high-quality brass products to clients across the globe. Our team of experts ensures that all products are carefully packaged and shipped to meet the precise needs of our clients." },
-    { question: "What is your quality assurance process?", answer: "At Sumant Brass Industries, we are committed to delivering high-quality products that meet the precise needs of our clients. Our team of experts ensures that all products undergo rigorous quality checks before they are shipped." },
-    { question: "Can I customize my brass product?", answer: "Yes, we offer custom manufacturing services to cater to the specific needs of our clients. Our team of experts works closely with clients to understand their requirements and deliver high-quality products." },
-    { question: "What is your pricing policy?", answer: "We offer competitive pricing for all our products and services. Our team of experts works closely with clients to understand their budget and deliver high-quality products that meet their needs." },
-    { question: "How do I contact Sumant Brass Industries?", answer: "You can contact us by phone at 097376 54341 or visit our website at http://www.sumantbrassindustries.com/. Our team of experts is available to answer all your questions and provide support whenever you need it." }] },
-  ctaTitle: "Get a Quote Today",
-  ctaDescription: "Contact us to learn more about our brass products and services. Our team of experts is available to answer all your questions and provide support whenever you need it.",
+  faq: { items: [{ question: "What types of brass products do you manufacture?", answer: "We manufacture a wide range of brass products, including components, fittings, and custom products. Please contact us to discuss your specific requirements." },
+    { question: "Do you offer custom brass product development services?", answer: "Yes, our team of experts works closely with clients to design and develop custom brass products that meet their specific requirements." },
+    { question: "What is your quality control process?", answer: "We have a rigorous quality control process in place to ensure that every brass product that leaves our facility meets the highest standards of quality and excellence." },
+    { question: "Do you export your brass products?", answer: "Yes, we export our high-quality brass products to clients across the globe, ensuring timely delivery and exceptional customer service." },
+    { question: "Can I visit your facility in Jamnagar?", answer: "Yes, we welcome clients to visit our facility in Jamnagar to see our manufacturing processes firsthand. Please contact us to schedule a visit." },
+    { question: "What is your pricing policy?", answer: "We offer competitive pricing for our brass products, and our pricing policy is transparent and flexible. Please contact us to discuss your specific requirements and pricing." }] },
+  ctaTitle: "Get a Quote Today!",
+  ctaDescription: "Contact us to discuss your brass product requirements and get a quote from our team of experts.",
   ctaButtonText: "Request Quote",
-  metaDescription: "Sumant Brass Industries - Leading manufacturer of high-quality brass products in Gujarat",
+  metaDescription: "Sumant Brass Industries: Leading manufacturer of high-quality brass products in Jamnagar, Gujarat.",
 };
 
 export const siteConfig = {
